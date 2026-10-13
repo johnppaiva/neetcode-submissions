@@ -1,0 +1,31 @@
+"""
+# Definition for a Node.
+class Node:
+    def __init__(self, x: int, next: 'Node' = None, random: 'Node' = None):
+        self.val = int(x)
+        self.next = next
+        self.random = random
+"""
+
+class Solution:
+    def copyRandomList(self, head: 'Optional[Node]') -> 'Optional[Node]':
+        
+        oldToCopy = {None:None}
+
+        # Two Pass 1st just creation into dict 2nd is connecting pointers
+
+        cur = head
+
+        while cur:
+            copy = cur
+            oldToCopy[cur] = Node(copy.val)
+            cur = cur.next
+        cur = head
+
+        while cur:
+            copy = oldToCopy[cur]
+            copy.next = oldToCopy[cur.next]
+            copy.random = oldToCopy[cur.random]
+            cur = cur.next
+        
+        return oldToCopy[head]
